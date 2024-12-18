@@ -6,7 +6,37 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>Welcome to the Flask Web App</h1>
+    <h1>Build a Baffle</h1>
     <p>This is the home page.</p>
+    
+    <!-- Form for submitting the topic -->
+    <form method="POST">
+        <label for="topic">Enter the topic:</label>
+        <input type="text" id="topic" name="topic" required>
+        <label for="topic">Number of output:</label>
+        <input type="text" id="output_num" name="output_num" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if baffles %}
+        <h2>Generated Baffles</h2>
+        <ul>
+            {% for baffle in baffles %}
+                <li>
+                    <h3>{{ baffle.title }}</h3>
+                    <p><strong>Fields:</strong></p>
+                    <ul>
+                        {% for field in baffle.field %}
+                            <li>{{ field }}</li>
+                        {% endfor %}
+                    </ul>
+                    <p><strong>Gaps:</strong></p>
+                    <p>{{ baffle.gaps }}</p>
+                    <p><strong>Recommendations:</strong></p>
+                    <p>{{ baffle.recommendations }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </body>
 </html>

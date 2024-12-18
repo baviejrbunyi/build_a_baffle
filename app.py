@@ -1,7 +1,5 @@
 from backend import create_app  # Import the create_app function from the backend package
 
-
-
 # Create an instance of the Flask app
 app = create_app()
 
