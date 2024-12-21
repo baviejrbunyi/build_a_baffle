@@ -9,7 +9,7 @@ This project is a web application powered by Flask, designed to provide an AI-ba
 
 1. Clone the repository (use cd to go the directory or folder you want to clone the repository into):
    ```bash
-   git clone [<repository-url>](https://github.com/baviejrbunyi/build_a_baffle)
+   git clone https://github.com/baviejrbunyi/build_a_baffle
 2. Create and activate a virtual environment (navigate to the folder where you cloned the repository):
    '''bash
    python -m venv .venv
