@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAB</title>
+    <link rel="stylesheet" href="/CSS/CardPage.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+</head>
+<body>
+
+    <video id="bg-vid" autoplay loop muted>
+        <source src="/assets/video/grid.mp4" type="video/mp4">
+    </video>
+
+    <div class="navbar">
+        <img src="/assets/image/logo.png" alt="logo">
+        <i class='bx bxs-user bx-lg'></i>
+        <i class='bx bxs-home bx-lg' ></i>
+    </div>
+
+    <div class="card-container">
+
+        <div class="card" onclick="showTargetDiv()">
+            <p>this is a card</p>
+        </div>
+
+        <div class="card" onclick="showTargetDiv()">
+            <p>this is a card</p>
+        </div>
+
+        <div class="card" onclick="showTargetDiv()">
+            <p>this is a card</p>
+        </div>
+
+        <div class="card" onclick="showTargetDiv()">
+            <p>this is a card</p>
+        </div>
+
+        <div class="card" onclick="showTargetDiv()">
+            <p>this is a card</p>
+        </div>
+
+        <div class="card" onclick="showTargetDiv()">
+            <p>this is a card</p>
+        </div>
+    </div>
+
+    <div class="selected-card" id="target-div">
+        <button onclick="hideTargetDiv()">X</button>
+
+        <div class="selected-text">
+            <p>problem statement here</p>
+        </div>
+    
+        <div class="hashtags">
+            <p>#tags #tags #tags #tags</p>
+        </div>
+
+        <div class="selected-buttons">
+            <button id="regenerate-button">Regenerate</button>
+            <button id="bookmark-button" onclick="showConfirmDiv()">Bookmark</button>
+        </div>
+    </div>
+    
+
+    <div class="bookmark-confirm" id="confirm-div">
+        <p>Add to bookmark?</p>
+
+        <div class="confirm-buttons">
+            <button id="confirm-yes" onclick="">Yes</button>
+            <button id="confirm-no" onclick="hideConfirmDiv()">No</button>
+        </div>
+    </div>
+
+
+    <!-- needs work VVV-->
+
+    <script>
+      function showTargetDiv() {
+        const targetDiv = document.getElementById('target-div');
+        targetDiv.style.display = 'block';
+      };
+
+      function hideTargetDiv() {
+        const targetDiv = document.getElementById('target-div');
+        targetDiv.style.display = 'none';
+      };
+
+      function showConfirmDiv() {
+        const targetDiv = document.getElementById('confirm-div');
+        targetDiv.style.display = 'block';
+      };
+
+      function hideConfirmDiv() {
+        const targetDiv = document.getElementById('confirm-div');
+        targetDiv.style.display = 'none';
+      };
+    </script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>

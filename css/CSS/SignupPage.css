@@ -1,0 +1,285 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+@media (max-width: 768px) {
+    .wrapper {
+        width: 90%; 
+        padding: 15px; 
+    }
+
+    .input-box {
+        margin-bottom: 10px; 
+    }
+
+    .sign-up-button {
+        margin-left: 10%; 
+        width: 80%;
+    }
+
+    .other-options {
+        font-size: 16px; 
+    }
+
+    .login-link {
+        font-size: 12.5px; 
+        margin-top: 10px; 
+    }
+
+    #tos-policy {
+        font-size: 10px; 
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .wrapper {
+        width: 95%; 
+        padding: 10px;
+    }
+
+    .input-box p {
+        font-size: 14px; 
+    }
+
+    .input-box input {
+        padding: 15px 10px; 
+    }
+
+    .sign-up-button {
+        width: 90%; 
+        font-size: 16px; 
+    }
+
+    .other-options {
+        font-size: 14px; 
+    }
+
+    .login-link {
+        font-size: 11px; 
+        margin-top: 8px; 
+    }
+
+    #tos-policy {
+        font-size: 9px; 
+        padding: 0 5px; 
+    }
+}
+
+
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #fff;
+    height: auto;
+    width: inherit;
+}
+
+#bg-vid {
+    width: 100%;
+    height: auto;
+    opacity: 0.2;
+    background-size: cover;
+    position: fixed;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.navbar {
+    height: auto ;
+    width: 100%;
+    background: #1282b7;
+    position: absolute;
+    top: 0;
+    border-bottom: 3px solid #3A2308;
+}
+
+.navbar img {
+    display: block;
+    margin-left: 50px;
+    margin-right: 50px;
+    width: auto;
+    height: auto;
+    margin-top: 5px;
+    margin-bottom: -15px;
+    margin-left: 10px;
+    float: left;
+}
+
+.wrapper {
+    height: 600px auto;
+    width: 600px;
+    background: #8abab5;
+    color: #fff;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    border: 3px solid #3A2308;
+    border-radius: 10px;
+    padding-bottom: 20px;
+}
+
+.wrapper h1 {
+    padding-top: 20px;
+    font-size: 30px;
+    font-weight: 500;
+    text-align: center;
+    color: #333333;
+    margin-bottom: -15px;
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 1);
+}
+
+.wrapper .input-box {
+    padding-left: 40px;
+    padding-right: 40px;
+    width:100%;
+    height: 30px ;
+    margin: 50px 0;
+    color: #fff;
+    font-weight:600;
+    font-size: 18px;
+}
+
+
+.input-box {
+    margin-bottom: 15px;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255,255, 0.2);
+    border-radius: 10px;
+    font-size: 16px;
+    color: #000;
+    background: #fff;
+    padding: 20px 45px 20px 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.input-box p{
+padding-left: 5px;
+text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+
+.input-box input::placeholder {
+    color: #fff;
+}
+
+.wrapper .remember-forgot {
+    display: flex;
+    float: right;
+    justify-content: space-between;
+    font-size: 13.5px;
+    padding-right: 45px;
+}
+
+.remember-forgot label input {
+    accent-color: #fff;
+    margin-right: 3px;
+}
+
+.remember-forgot a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.remember-forgot a:hover {
+    text-decoration: none;
+}
+
+.other-options {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.other-options p {
+    margin-bottom: 5px;
+}
+
+.sign-up-button {
+    margin-left: 25%;
+    width: 50%;
+    height: 45px;
+    background: #84CAFF;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    font-size: 20px;
+    color: #000;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+.sign-up-button:hover {
+    background: #84e6ff;
+
+}
+
+.login-link {
+    font-size: 14.5px;
+    text-align: center;
+    margin-top: 15px;
+    
+}
+
+.login-link p {
+    margin-bottom: 5px;
+}
+
+.login-link p a {
+    color: #fff;
+    text-decoration: underline;
+    font-weight: 600;
+
+}
+
+.other-options i {
+    transition: transform 0.2s ease-in-out;
+}
+
+.other-options i:hover {
+    cursor: pointer;
+    text-shadow:0 0 10px rgba(255,255,255, 0.5) ;
+    transform: scale(1.1);
+}
+
+#tos-policy {
+    padding-top: 5px;
+    font-size: 11px;
+    padding: 0 20px;
+    word-wrap: break-word;
+}
+
+
+.TOS {
+    position: absolute;
+    z-index: 1;
+    background: #333;
+    height: 500px;
+    width: 500px;
+
+}
