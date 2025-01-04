@@ -19,28 +19,34 @@ def groq_request(input):
                 "content": input
             }
         ],
-        model="llama3-8b-8192",
+        response_format= {"type": "json_object"},
+        model="llama-3.3-70b-versatile",
+        stream=False,
     )
 
-    response = chat_completion.choices[0].message.content
-
-    return response
+    return json.loads(chat_completion.choices[0].message.content)
 
 
 def create_prompt(topic):
-
     prompt = f"""
-
     Give me one problem that is about {topic}.
 
-    Output must follow this format. do not add anything on the first part of the output:
-    title: title of the problem
+    Output must follow this format:
+    title: title of the problem.
     field: field of the problem (if multiple fields, max of 3. list down in a bulleted format using "-")
     gaps: gaps to be solved
     recommendations: recommendations for output (3-5 sentences)
 
-    Ensure consistency on the formatting
+    Ensure that the problems are unique from eqch other. No duplicate titles or idea
 
+    Output must be in this JSON format:
+
+    {{
+        "title": "",
+        "field": [""],
+        "gaps": [""],
+        "recommendations": ""
+    }}
     """
 
     return prompt

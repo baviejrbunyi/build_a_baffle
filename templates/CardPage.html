@@ -1,61 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BAB</title>
-    <link rel="stylesheet" href="/CSS/CardPage.css">
+    <link rel="stylesheet" href="../static/CSS/CardPage.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    
 </head>
+
 <body>
 
     <video id="bg-vid" autoplay loop muted>
-        <source src="/assets/video/grid.mp4" type="video/mp4">
+        <source src="../static/assets/video/grid.mp4" type="video/mp4">
     </video>
 
     <div class="navbar">
-        <img src="/assets/image/logo.png" alt="logo">
-        <i class='bx bxs-user bx-lg'></i>
-        <i class='bx bxs-home bx-lg' ></i>
+        <img src="../static/assets/image/logo.png" alt="logo">
+        <a href="{{ url_for('questions') }}"><i class='bx bxs-home bx-lg' ></i></a>
+        <a href="{{ url_for('profile') }}"><i class='bx bxs-user bx-lg'></i></a>
+        
+        
     </div>
 
     <div class="card-container">
-
-        <div class="card" onclick="showTargetDiv()">
-            <p>this is a card</p>
+        {% for baffle in baffles %}
+        <div class="card" data-title="{{ baffle.title }}" data-field="{{ baffle.field|join(', ') }}"
+            data-gaps="{{ baffle.gaps|join(', ') }}" data-recommendations="{{ baffle.recommendations }}"
+            onclick="handleCardClick(this)">
+            <p>{{ baffle.title }}</p>
         </div>
-
-        <div class="card" onclick="showTargetDiv()">
-            <p>this is a card</p>
-        </div>
-
-        <div class="card" onclick="showTargetDiv()">
-            <p>this is a card</p>
-        </div>
-
-        <div class="card" onclick="showTargetDiv()">
-            <p>this is a card</p>
-        </div>
-
-        <div class="card" onclick="showTargetDiv()">
-            <p>this is a card</p>
-        </div>
-
-        <div class="card" onclick="showTargetDiv()">
-            <p>this is a card</p>
-        </div>
+        {% endfor %}
     </div>
 
-    <div class="selected-card" id="target-div">
+    <div class="selected-card" id="target-div" style="display: none;">
         <button onclick="hideTargetDiv()">X</button>
 
         <div class="selected-text">
-            <p>problem statement here</p>
-        </div>
-    
-        <div class="hashtags">
-            <p>#tags #tags #tags #tags</p>
+            <h2 id="selected-title"></h2>
+            <p id="selected-field"></p>
+            <p id="selected-gaps"></p>
+            <p id="selected-recommendations"></p>
         </div>
 
         <div class="selected-buttons">
@@ -63,9 +48,8 @@
             <button id="bookmark-button" onclick="showConfirmDiv()">Bookmark</button>
         </div>
     </div>
-    
 
-    <div class="bookmark-confirm" id="confirm-div">
+    <div class="bookmark-confirm" id="confirm-div" style="display: none;">
         <p>Add to bookmark?</p>
 
         <div class="confirm-buttons">
@@ -74,38 +58,45 @@
         </div>
     </div>
 
-
-    <!-- needs work VVV-->
-
     <script>
-      function showTargetDiv() {
-        const targetDiv = document.getElementById('target-div');
-        targetDiv.style.display = 'block';
-      };
+        // Handle card click
+        function handleCardClick(card) {
+            const title = card.getAttribute('data-title');
+            const field = card.getAttribute('data-field');
+            const gaps = card.getAttribute('data-gaps');
+            const recommendations = card.getAttribute('data-recommendations');
 
-      function hideTargetDiv() {
-        const targetDiv = document.getElementById('target-div');
-        targetDiv.style.display = 'none';
-      };
+            // Update selected card content
+            document.getElementById('selected-title').textContent = `Title: ${title}`;
+            document.getElementById('selected-field').textContent = `Field(s): ${field}`;
+            document.getElementById('selected-gaps').textContent = `Gaps: ${gaps}`;
+            document.getElementById('selected-recommendations').textContent = `Recommendations: ${recommendations}`;
 
-      function showConfirmDiv() {
-        const targetDiv = document.getElementById('confirm-div');
-        targetDiv.style.display = 'block';
-      };
+            // Show the selected card
+            const targetDiv = document.getElementById('target-div');
+            targetDiv.style.display = 'block';
+        }
 
-      function hideConfirmDiv() {
-        const targetDiv = document.getElementById('confirm-div');
-        targetDiv.style.display = 'none';
-      };
+        // Hide the selected card
+        function hideTargetDiv() {
+            const targetDiv = document.getElementById('target-div');
+            targetDiv.style.display = 'none';
+        }
+
+        // Show the bookmark confirmation dialog
+        function showConfirmDiv() {
+            const confirmDiv = document.getElementById('confirm-div');
+            confirmDiv.style.display = 'block';
+        }
+
+        // Hide the bookmark confirmation dialog
+        function hideConfirmDiv() {
+            const confirmDiv = document.getElementById('confirm-div');
+            confirmDiv.style.display = 'none';
+        }
+
     </script>
 
-
-
-
-
-
-
-
-
 </body>
+
 </html>

@@ -12,4 +12,38 @@ def init_routes(app):
             if topic:
                 # Generate baffles based on the input topic
                 baffles = Baffle.create_baffles(topic, output_num)
-        return render_template('index.html', baffles=baffles)
+        return render_template('LoginPage.html')
+    
+    @app.route('/signup')
+    def signup():
+        return render_template('SignupPage.html')
+    
+    @app.route('/login')
+    def login():
+        return render_template('LoginPage.html')
+    
+    @app.route('/profile')
+    def profile():
+        return render_template('ProfilePage.html')
+    
+    @app.route('/questions')
+    def questions():
+        return render_template('QuestionsPage.html')
+    
+    @app.route('/cards', methods=['GET', 'POST'])
+    def cards():
+        if request.method == 'POST':
+            answer1 = request.form.get('answer1')
+            answer2 = request.form.get('answer2')
+            answer3 = request.form.get('answer3')
+            
+            # Combine or process answers as needed
+            answers = [answer1, answer2, answer3]
+            print("Received answers:", answers)
+            
+            # Example: Use the answers to generate baffles
+            topic = " ".join(answers)  # Combine answers as a topic (example usage)
+            baffles = Baffle.create_baffles(topic, 6)
+            return render_template('CardPage.html', baffles=baffles)
+        
+        return render_template('CardPage.html', baffles=[])

@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BAB</title>
-    <link rel="stylesheet" href="/CSS/QuestionsPage.css">
+    <link rel="stylesheet" href="../static/CSS/QuestionsPage.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    
 </head>
 <body>
 
@@ -15,36 +14,109 @@
     </video>
 
     <div class="navbar">
-        <img src="/assets/image/logo.png" alt="logo">
-        <i class='bx bxs-home bx-lg' ></i>
-        <i class='bx bxs-user bx-lg'></i>
-        
+        <img src="../static/assets/image/logo.png" alt="logo">
+        <a href="{{ url_for('questions') }}"><i class='bx bxs-home bx-lg'></i></a>
+        <a href="{{ url_for('profile') }}"><i class='bx bxs-user bx-lg'></i></a>
     </div>
 
-
     <div class="wrapper">
-        <!-- questionable question mark -->
-        <img src="/assets/image/question mark.png" alt = "question-mark">
+        <!-- Questionable question mark -->
 
-        <form action = "">
-            <h1>Question</h1>
+        <form id="question-form" action="/cards" method="POST">
+            <h1 id="question-title">Question 1</h1>
+
+            <!-- Question container -->
             <div class="input-box">
-                <input type="text" required>
-
+                <p id="random-question" style="font-weight: bold;"></p>
+                <input type="text" id="answer" placeholder="Your answer" required>
             </div>
 
+            <!-- Navigation buttons -->
             <div class="button-container">
                 <div class="cancel-button">
-                    <button type="submit" onclick="" >Cancel</button>
+                    <button type="button" onclick="navigateQuestion('prev')">Previous</button>
                 </div>
-            
                 <div class="next-button">
-                    <button type="submit" onclick="">Next</button>
+                    <button type="button" onclick="navigateQuestion('next')">Next</button>
                 </div>
             </div>
+
+            <!-- Submit button -->
+            <div class="submit-container" style="display: none;">
+                <button type="submit">Submit</button>
+            </div>
+
+            <!-- Hidden inputs for all answers -->
+            <input type="hidden" name="answer1" id="hidden-answer1">
+            <input type="hidden" name="answer2" id="hidden-answer2">
+            <input type="hidden" name="answer3" id="hidden-answer3">
         </form>
     </div>
 
+    <script>
+        const questions = [
+            "What inspires you the most?",
+            "What is your favorite hobby and why?",
+            "Describe a challenge you overcame recently.",
+            "If you could visit any place in the world, where would it be?",
+            "What is one skill you wish to learn this year?",
+            "What motivates you to keep going every day?",
+            "Who is your role model and why?",
+            "What is your favorite book or movie and why?"
+        ];
+
+        let currentQuestion = 1;
+        const totalQuestions = 3;
+        const randomQuestions = [];
+        const answers = ["", "", ""]; // Array to store answers for all questions
+
+        // Generate random questions
+        function generateRandomQuestions() {
+            while (randomQuestions.length < totalQuestions) {
+                const randomIndex = Math.floor(Math.random() * questions.length);
+                const question = questions[randomIndex];
+                if (!randomQuestions.includes(question)) {
+                    randomQuestions.push(question);
+                }
+            }
+        }
+
+        // Update the question display
+        function updateQuestion() {
+            document.getElementById('random-question').textContent = randomQuestions[currentQuestion - 1];
+            document.getElementById('question-title').textContent = `Question ${currentQuestion}`;
+            document.getElementById('answer').value = answers[currentQuestion - 1]; // Load saved answer
+        }
+
+        // Navigate between questions
+        function navigateQuestion(direction) {
+            const answerInput = document.getElementById('answer');
+            answers[currentQuestion - 1] = answerInput.value; // Save current answer
+
+            if (direction === 'next' && currentQuestion < totalQuestions) {
+                currentQuestion++;
+            } else if (direction === 'prev' && currentQuestion > 1) {
+                currentQuestion--;
+            }
+
+            updateQuestion();
+
+            // Toggle navigation buttons
+            document.querySelector('.button-container').style.display = currentQuestion === totalQuestions ? 'none' : 'flex';
+            document.querySelector('.submit-container').style.display = currentQuestion === totalQuestions ? 'block' : 'none';
+        }
+
+        // Update hidden inputs before submitting
+        document.getElementById('question-form').addEventListener('submit', function () {
+            document.getElementById('hidden-answer1').value = answers[0];
+            document.getElementById('hidden-answer2').value = answers[1];
+            document.getElementById('hidden-answer3').value = answers[2];
+        });
+
+        // Initialize random questions
+        generateRandomQuestions();
+        updateQuestion();
+    </script>
 
 </body>
 </html>

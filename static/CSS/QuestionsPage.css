@@ -25,6 +25,13 @@
     .wrapper h1 {
         font-size: 1.8rem;
     }
+
+    .button-container button, 
+    .submit-container button {
+        width: 150px;
+        font-size: 18px;
+        height: 40px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -49,6 +56,13 @@
     .remember-forgot {
         font-size: 0.7rem;
     }
+
+    .button-container button, 
+    .submit-container button {
+        width: 120px;
+        font-size: 16px;
+        height: 35px;
+    }
 }
 
 * {
@@ -60,23 +74,22 @@
 
 body {
     margin: 0;
-    padding-top: 60px; 
+    padding-top: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     background: #fff;
-    overflow-x: hidden; 
+    overflow-x: hidden;
 }
-
 
 #bg-vid {
     width: 100vw;
     height: 100vh;
-    object-fit: cover; 
+    object-fit: cover;
     opacity: 0.2;
     position: fixed;
-    z-index: -1; 
+    z-index: -1;
     top: 0;
     left: 0;
 }
@@ -85,7 +98,7 @@ body {
     height: 60px;
     width: 100%;
     background: #1282b7;
-    position: fixed; 
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
@@ -96,7 +109,6 @@ body {
 }
 
 .navbar img {
-
     display: block;
     height: 80px;
     margin-right: auto;
@@ -117,99 +129,80 @@ body {
 }
 
 .wrapper {
-    height: 600px auto;
     width: 1000px;
     background: #8abab5;
     color: #fff;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 10px;
+    padding: 20px;
     border: 3px solid #3A2308;
     border-radius: 10px;
-    padding-bottom: 20px;
+    margin: auto;
+    text-align: center;
+    position: relative;
 }
 
-
-.wrapper img{
-    position: absolute;
-    padding-left: 390px;
-    margin-top: -177px;
-}
 
 
 .wrapper h1 {
-    padding-top: 50px;
     font-size: 30px;
     font-weight: 500;
-    text-align: center;
     color: #333333;
-    margin-bottom: -30px;
-    margin-top: 40px;
+    margin-bottom: 20px;
     text-shadow: 0 2px 3px rgba(0, 0, 0, 1);
 }
 
 .wrapper .input-box {
-    padding-left: 40px;
-    padding-right: 40px;
-    width:100%;
-    height: 30px ;
-    margin: 50px 0;
-    color: #fff;
-    font-weight:600;
-    font-size: 18px;
+    width: 100%;
+    margin: 20px 0;
+    text-align: left;
 }
 
 .input-box input {
     width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    border: 2px solid rgba(255, 255,255, 0.2);
+    height: 45px;
+    background: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
     font-size: 16px;
     color: #000;
-    background: #fff;
-    padding: 20px 45px 20px 20px;
+    padding: 10px 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    outline: none;
 }
 
-.input-box p{
-padding-left: 5px;
-text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+.input-box p {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
 }
 
+.button-container, 
+.submit-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
 
-.cancel-button button , .next-button button{
-    margin-left: 25%;
+.button-container button, 
+.submit-container button {
     width: 200px;
     height: 45px;
     background: #84CAFF;
     border: none;
-    outline: none;
     border-radius: 40px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    font-size: 22px;
+    font-size: 20px;
     color: #000;
     font-weight: 700;
-    margin-bottom: 50px;
-    border: 2px solid #000;
+    transition: background 0.2s;
 }
 
-.cancel-button {
-    float: left;
-    padding-left: 200px;
-}
-
-.next-button {
-    padding-right: 300px;
-    float:right;
-}
-
-
-.buttons :hover {
+.button-container button:hover, 
+.submit-container button:hover {
     background: #84e6ff;
-
 }
 
+.submit-container {
+    justify-content: center;
+}

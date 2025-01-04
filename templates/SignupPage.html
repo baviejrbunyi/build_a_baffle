@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BAB</title>
-    <link rel="stylesheet" href="/CSS/SignupPage.css">
+    <link rel="stylesheet" href="../static/CSS/SignupPage.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
 </head>
 <body>
 
     <video id="bg-vid" autoplay loop muted>
-        <source src="/assets/video/grid.mp4" type="video/mp4">
+        <source src="../static/assets/video/grid.mp4" type="video/mp4">
     </video>
 
     <div class="navbar">
-        <img src="/assets/image/logo.png" alt="logo">
+        <img src="../static/assets/image/logo.png" alt="logo">
     </div>
 
 
@@ -54,7 +54,7 @@
             <button type="submit" class="sign-up-button" >Sign up</button>
 
             <div class="login-link">
-                <p>Already have an account? <a href="/templates/LoginPage.html">Log in</a> </p>
+                <p>Already have an account? <a href="{{ url_for('login') }}">Log in</a> </p>
                 <p id="tos-policy">By creating an account, you agree with our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
             </div>
 

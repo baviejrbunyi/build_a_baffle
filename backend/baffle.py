@@ -1,5 +1,6 @@
 import re
-import backend.AI as AI
+import  backend.AI as AI
+import json
 
 class Baffle:
     def __init__(self, title, field, gaps, recommendations):
@@ -10,44 +11,20 @@ class Baffle:
 
     def __repr__(self):
         return f"Baffle(title={self.title}, field={self.field}, gaps={self.gaps}, recommendations={self.recommendations})"
-
-def store_baffle(response):
-    # Initialize result with empty values\
-
-    print(response)
-    result = {
-        "title": "",
-        "field": [],
-        "gaps": "",
-        "recommendations": ""
-    }
-
-    # Use regular expressions to parse the different sections from the response
-    title_match = re.search(r"title:\s*(.+)", response)
-    field_match = re.findall(r"- ([\w\s]+)", response)
-    gaps_match = re.search(r"gaps:\s*(.+)", response)
-    recommendations_match = re.search(r"recommendations:\s*(.+)", response)
-
-    # Extract and clean up the matched values
-    if title_match:
-        result["title"] = title_match.group(1).strip()
-
-    if field_match:
-        result["field"] = [field.strip() for field in field_match]
-
-    if gaps_match:
-        result["gaps"] = gaps_match.group(1).strip()
-
-    if recommendations_match:
-        result["recommendations"] = recommendations_match.group(1).strip()
-
-    # Create and return the Baffle object
-    return Baffle(
-        title=result["title"],
-        field=result["field"],
-        gaps=result["gaps"],
-        recommendations=result["recommendations"]
-    )
+    
+    @classmethod
+    def from_json(cls, json_data):
+        """
+        Populates a Baffle object from a JSON-formatted string or dictionary.
+        """
+        if isinstance(json_data, str):
+            json_data = json.loads(json_data)  # Parse string into dictionary
+        return cls(
+            title=json_data.get("title", ""),
+            field=json_data.get("field", []),
+            gaps=json_data.get("gaps", []),
+            recommendations=json_data.get("recommendations", "")
+        )
 
 
 def create_baffles(topic, loop):
@@ -55,8 +32,9 @@ def create_baffles(topic, loop):
     loop = int(loop)
 
     for i in range(loop):
-        baffle = store_baffle(AI.groq_request(AI.create_prompt(topic)))
+        baffle = Baffle.from_json(AI.groq_request(AI.create_prompt(topic)))
         baffles.append(baffle)
         
 
     return baffles
+

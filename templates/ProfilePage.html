@@ -4,25 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BAB</title>
-    <link rel="stylesheet" href="/CSS/ProfilePage.css">
+    <link rel="stylesheet" href="../static/CSS/ProfilePage.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
 </head>
 <body>
 
     <video id="bg-vid" autoplay loop muted>
-        <source src="/assets/video/grid.mp4" type="video/mp4">
+        <source src="../static/assets/video/grid.mp4" type="video/mp4">
     </video>
 
     <div class="navbar">
-        <img src="/assets/image/logo.png" alt="logo">
-        <i class='bx bxs-home bx-lg' ></i>
-        <i class='bx bxs-user bx-lg'></i>
+        <img src="../static/assets/image/logo.png" alt="logo">
+        <a href="{{ url_for('questions') }}"><i class='bx bxs-home bx-lg' ></i></a>
+        <a href="{{ url_for('profile') }}"><i class='bx bxs-user bx-lg'></i></a>
+        
         
     </div>
 
     <div class="sidebar">
-        <img src="/assets/image/user_small.png">
+        <img src="../static/assets/image/user_small.png">
         
     </div>
 
@@ -32,7 +33,7 @@
 
     <div class="wrapper">
         
-        <img src="/assets/image/user.png" alt="user-pfp">
+        <img src="../static/assets/image/user.png" alt="user-pfp">
         <h1 id="status">FREE</h1>
 
         <form action="">
