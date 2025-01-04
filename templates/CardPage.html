@@ -25,7 +25,7 @@
         {% for baffle in baffles %}
         <div class="card" data-title="{{ baffle.title }}" data-field="{{ baffle.field|join(', ') }}"
             data-gaps="{{ baffle.gaps|join(', ') }}" data-recommendations="{{ baffle.recommendations }}"
-            onclick="handleCardClick(this)">
+            data-card-number="{{ loop.index }}" onclick="handleCardClick(this)">
             <p>{{ baffle.title }}</p>
         </div>
         {% endfor %}
@@ -57,12 +57,17 @@
     </div>
 
     <script>
+        let selectedCardNumber = null;
+
         // Handle card click
         function handleCardClick(card) {
             const title = card.getAttribute('data-title');
             const field = card.getAttribute('data-field');
             const gaps = card.getAttribute('data-gaps');
             const recommendations = card.getAttribute('data-recommendations');
+
+            // Get the card number based on its index in the list (1-based index)
+            selectedCardNumber = Array.from(card.parentNode.children).indexOf(card) + 1;
 
             // Update selected card content
             document.getElementById('selected-title').textContent = `Title: ${title}`;
@@ -75,22 +80,42 @@
             targetDiv.style.display = 'block';
         }
 
-        // Hide the selected card
+        // Hide the selected card and refresh the baffle list
         function hideTargetDiv() {
             const targetDiv = document.getElementById('target-div');
             targetDiv.style.display = 'none';
+
+            // Refresh baffle cards after closing
+            fetchBaffles();  // Ensure the list is refreshed here
         }
 
-        // Show the bookmark confirmation dialog
-        function showConfirmDiv() {
-            const confirmDiv = document.getElementById('confirm-div');
-            confirmDiv.style.display = 'block';
-        }
+        // Fetch the baffles to update the UI
+        function fetchBaffles() {
+            fetch('/get_baffles')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.baffles) {
+                        const cardContainer = document.getElementById('card-container');
+                        cardContainer.innerHTML = ''; // Clear existing cards
 
-        // Hide the bookmark confirmation dialog
-        function hideConfirmDiv() {
-            const confirmDiv = document.getElementById('confirm-div');
-            confirmDiv.style.display = 'none';
+                        // Add updated baffles to the card-container
+                        data.baffles.forEach(baffle => {
+                            const card = document.createElement('div');
+                            card.classList.add('card');
+                            card.setAttribute('data-title', baffle.title);
+                            card.setAttribute('data-field', baffle.field);
+                            card.setAttribute('data-gaps', baffle.gaps);
+                            card.setAttribute('data-recommendations', baffle.recommendations);
+                            card.textContent = baffle.title;
+                            card.onclick = () => handleCardClick(card);
+                            cardContainer.appendChild(card);
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to fetch baffles');
+                });
         }
 
         // Regenerate baffle and update the list
@@ -102,7 +127,10 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ field: field })
+                body: JSON.stringify({
+                    field: field,
+                    card_number: selectedCardNumber  // Send the selected card number
+                })
             })
                 .then(response => response.json())
                 .then(data => {
@@ -118,7 +146,7 @@
                         // Update the card-container with the refreshed list of baffles
                         const cardContainer = document.getElementById('card-container');
                         cardContainer.innerHTML = ''; // Clear existing cards
-                        
+
                         // Add updated baffles to the card-container
                         data.updated_baffles.forEach(baffle => {
                             const card = document.createElement('div');
@@ -140,6 +168,7 @@
         });
 
     </script>
+
 
 </body>
 
