@@ -17,10 +17,10 @@
 
     <div class="navbar">
         <img src="../static/assets/image/logo.png" alt="logo">
-        <a href="{{ url_for('questions') }}"><i class='bx bxs-home bx-lg' ></i></a>
+        <a href="{{ url_for('questions') }}"><i class='bx bxs-home bx-lg'></i></a>
         <a href="{{ url_for('profile') }}"><i class='bx bxs-user bx-lg'></i></a>
-        
-        
+
+
     </div>
 
     <div class="card-container">
@@ -94,6 +94,34 @@
             const confirmDiv = document.getElementById('confirm-div');
             confirmDiv.style.display = 'none';
         }
+
+        document.getElementById('regenerate-button').addEventListener('click', function () {
+            const field = document.getElementById('selected-field').textContent.replace("Field(s): ", "");
+
+            fetch('/regenerate_baffle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ field: field })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(`Error: ${data.error}`);
+                    } else {
+                        // Update the selected card with new baffle data
+                        document.getElementById('selected-title').textContent = `Title: ${data.title}`;
+                        document.getElementById('selected-field').textContent = `Field(s): ${data.field}`;
+                        document.getElementById('selected-gaps').textContent = `Gaps: ${data.gaps}`;
+                        document.getElementById('selected-recommendations').textContent = `Recommendations: ${data.recommendations}`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Failed to regenerate baffle');
+                });
+        });
 
     </script>
 

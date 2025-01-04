@@ -29,12 +29,44 @@ class Baffle:
 
 def create_baffles(topic, loop):
     baffles = []
+    titles = []
     loop = int(loop)
 
     for i in range(loop):
-        baffle = Baffle.from_json(AI.groq_request(AI.create_prompt(topic)))
-        baffles.append(baffle)
-        
+        prompt_input = AI.create_prompt(AI.summarize_topic(topic), titles)
+        baffle_data = AI.groq_request(prompt_input)
+
+        if baffle_data:
+            try:
+                baffle = Baffle.from_json(baffle_data)
+                if baffle and baffle.title and baffle.title not in titles:
+                    titles.append(baffle.title)
+                    baffles.append(baffle)
+            except Exception as e:
+                print(f"Error creating baffle from data: {e}")
+
+        print(f"Titles so far: {titles}")
 
     return baffles
 
+def create_baffle_with_field(field):
+    """
+    Generate a single Baffle instance that matches the given field.
+    """
+    titles = []  # Track titles to avoid duplicates
+
+    # Generate a baffle using the field as part of the topic
+    prompt_input = AI.create_prompt(field, titles)
+    baffle_data = AI.groq_request(prompt_input)
+
+    if baffle_data:
+        try:
+            baffle = Baffle.from_json(baffle_data)
+            if baffle and baffle.title and baffle.title not in titles:
+                titles.append(baffle.title)
+                return baffle
+        except Exception as e:
+            print(f"Error creating baffle from data: {e}")
+
+    # Return None if no valid baffle was created
+    return None

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,11 @@
     <link rel="stylesheet" href="../static/CSS/QuestionsPage.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
 
     <video id="bg-vid" autoplay loop muted>
-        <source src="/assets/video/grid.mp4" type="video/mp4">
+        <source src="../static/assets/video/grid.mp4" type="video/mp4">
     </video>
 
     <div class="navbar">
@@ -20,7 +22,6 @@
     </div>
 
     <div class="wrapper">
-        <!-- Questionable question mark -->
 
         <form id="question-form" action="/cards" method="POST">
             <h1 id="question-title">Question 1</h1>
@@ -47,28 +48,28 @@
             </div>
 
             <!-- Hidden inputs for all answers -->
-            <input type="hidden" name="answer1" id="hidden-answer1">
-            <input type="hidden" name="answer2" id="hidden-answer2">
-            <input type="hidden" name="answer3" id="hidden-answer3">
+            <input type="hidden" name="questions_and_answers" id="questions-and-answers">
         </form>
     </div>
 
     <script>
-        const questions = [
-            "What inspires you the most?",
-            "What is your favorite hobby and why?",
-            "Describe a challenge you overcame recently.",
-            "If you could visit any place in the world, where would it be?",
-            "What is one skill you wish to learn this year?",
-            "What motivates you to keep going every day?",
-            "Who is your role model and why?",
-            "What is your favorite book or movie and why?"
-        ];
-
+        // Initialize necessary variables
         let currentQuestion = 1;
         const totalQuestions = 3;
+        const questions = [
+            "What's one thing you'd like to achieve this year?",
+            "What's something you want to improve about yourself?",
+            "What’s the biggest challenge you’ve faced recently?",
+            "Can you think of a time when you pushed through something difficult?",
+            "What’s one change you’d like to see in your community?",
+            "If you could help someone right now, who would it be and how?",
+            "If you could create a new habit for yourself, what would it be?",
+            "What’s an idea you’ve always wanted to try but haven’t yet?",
+            "How would you help someone who’s struggling with a problem?",
+            "What’s one thing you’d do if you were the leader of a team?"
+        ];
         const randomQuestions = [];
-        const answers = ["", "", ""]; // Array to store answers for all questions
+        const answers = []; // Array to store answers
 
         // Generate random questions
         function generateRandomQuestions() {
@@ -83,9 +84,11 @@
 
         // Update the question display
         function updateQuestion() {
-            document.getElementById('random-question').textContent = randomQuestions[currentQuestion - 1];
-            document.getElementById('question-title').textContent = `Question ${currentQuestion}`;
-            document.getElementById('answer').value = answers[currentQuestion - 1]; // Load saved answer
+            if (randomQuestions.length > 0) {
+                document.getElementById('random-question').textContent = randomQuestions[currentQuestion - 1];
+                document.getElementById('question-title').textContent = `Question ${currentQuestion}`;
+                document.getElementById('answer').value = answers[currentQuestion - 1] || ''; // Load saved answer
+            }
         }
 
         // Navigate between questions
@@ -106,17 +109,36 @@
             document.querySelector('.submit-container').style.display = currentQuestion === totalQuestions ? 'block' : 'none';
         }
 
-        // Update hidden inputs before submitting
-        document.getElementById('question-form').addEventListener('submit', function () {
-            document.getElementById('hidden-answer1').value = answers[0];
-            document.getElementById('hidden-answer2').value = answers[1];
-            document.getElementById('hidden-answer3').value = answers[2];
+        // Ensure that answers are stored in the array as user navigates
+        document.getElementById('question-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form from submitting immediately
+
+            // Make sure the answer for the current question is saved
+            const answerInput = document.getElementById('answer');
+            answers[currentQuestion - 1] = answerInput.value.trim() || ''; // Save current answer, even if empty
+
+            // Combine questions and answers into an array of objects
+            const questionsAndAnswers = randomQuestions.map((question, index) => {
+                return {
+                    question: question,
+                    answer: answers[index] || "" // Ensure empty answers are stored as empty strings
+                };
+            });
+
+            console.log("Questions and Answers before submission:", questionsAndAnswers);
+
+            // Store the questions and answers as JSON in the hidden input
+            document.getElementById('questions-and-answers').value = JSON.stringify(questionsAndAnswers);
+
+            // Submit the form after storing the data
+            this.submit();
         });
 
         // Initialize random questions
         generateRandomQuestions();
         updateQuestion();
-    </script>
 
+    </script>
 </body>
+
 </html>
