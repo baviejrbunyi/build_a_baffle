@@ -19,11 +19,9 @@
         <img src="../static/assets/image/logo.png" alt="logo">
         <a href="{{ url_for('questions') }}"><i class='bx bxs-home bx-lg'></i></a>
         <a href="{{ url_for('profile') }}"><i class='bx bxs-user bx-lg'></i></a>
-
-
     </div>
 
-    <div class="card-container">
+    <div class="card-container" id="card-container">
         {% for baffle in baffles %}
         <div class="card" data-title="{{ baffle.title }}" data-field="{{ baffle.field|join(', ') }}"
             data-gaps="{{ baffle.gaps|join(', ') }}" data-recommendations="{{ baffle.recommendations }}"
@@ -95,6 +93,7 @@
             confirmDiv.style.display = 'none';
         }
 
+        // Regenerate baffle and update the list
         document.getElementById('regenerate-button').addEventListener('click', function () {
             const field = document.getElementById('selected-field').textContent.replace("Field(s): ", "");
 
@@ -115,6 +114,23 @@
                         document.getElementById('selected-field').textContent = `Field(s): ${data.field}`;
                         document.getElementById('selected-gaps').textContent = `Gaps: ${data.gaps}`;
                         document.getElementById('selected-recommendations').textContent = `Recommendations: ${data.recommendations}`;
+
+                        // Update the card-container with the refreshed list of baffles
+                        const cardContainer = document.getElementById('card-container');
+                        cardContainer.innerHTML = ''; // Clear existing cards
+                        
+                        // Add updated baffles to the card-container
+                        data.updated_baffles.forEach(baffle => {
+                            const card = document.createElement('div');
+                            card.classList.add('card');
+                            card.setAttribute('data-title', baffle.title);
+                            card.setAttribute('data-field', baffle.field);
+                            card.setAttribute('data-gaps', baffle.gaps);
+                            card.setAttribute('data-recommendations', baffle.recommendations);
+                            card.textContent = baffle.title;
+                            card.onclick = () => handleCardClick(card);
+                            cardContainer.appendChild(card);
+                        });
                     }
                 })
                 .catch(error => {
