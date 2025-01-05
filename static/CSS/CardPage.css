@@ -214,11 +214,18 @@ body {
 }
 
 
+<<<<<<< HEAD
 
 /* Addition */
 
 body .loading {
     animation-delay: 5s; /* CHANGE THIS TO CHANGE TIME IT TAKES*/
+=======
+/* Addition */
+
+body .loading {
+    animation-delay: 1s; /* CHANGE THIS TO CHANGE TIME IT TAKES*/
+>>>>>>> temp
 }
 
 .loading {
@@ -273,6 +280,11 @@ body .loading {
     }
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> temp
 /* Responsive Styling */
 @media (max-width: 768px) {
     .card-container {

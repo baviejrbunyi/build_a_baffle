@@ -11,6 +11,16 @@
 
 <body>
 
+    <div class="loading" id="loading">
+            
+        <div class="loading_centered">
+            <img src="../static/assets/image/logo.png" alt="logo">
+            <p>
+            Generating...
+            </p>
+        </div>
+    </div>
+
     <video id="bg-vid" autoplay loop muted>
         <source src="../static/assets/video/grid.mp4" type="video/mp4">
     </video>
@@ -44,7 +54,7 @@
 
             <!-- Submit button -->
             <div class="submit-container" style="display: none;">
-                <button type="submit">Submit</button>
+                <button type="submit" onclick="showLoadingScreen()">Submit</button>
             </div>
 
             <!-- Hidden inputs for all answers -->
@@ -149,29 +159,28 @@
             document.querySelector('.submit-container').style.display = currentQuestion === totalQuestions ? 'block' : 'none';
         }
 
-        // Ensure that answers are stored in the array as user navigates
+        // Show loading screen
+        function showLoadingScreen() {
+            document.getElementById('loading').style.display = 'block';
+        }
+
         document.getElementById('question-form').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent form from submitting immediately
+            // Show loading animation
+            document.getElementById('loading').style.display = 'block';
 
-            // Make sure the answer for the current question is saved
+            // Save answers and questions
             const answerInput = document.getElementById('answer');
-            answers[currentQuestion - 1] = answerInput.value.trim() || ''; // Save current answer, even if empty
+            answers[currentQuestion - 1] = answerInput.value.trim() || ''; // Save current answer
 
-            // Combine questions and answers into an array of objects
-            const questionsAndAnswers = randomQuestions.map((question, index) => {
-                return {
-                    question: question,
-                    answer: answers[index] || "" // Ensure empty answers are stored as empty strings
-                };
-            });
+            const questionsAndAnswers = randomQuestions.map((question, index) => ({
+                question,
+                answer: answers[index] || ''
+            }));
 
             console.log("Questions and Answers before submission:", questionsAndAnswers);
 
-            // Store the questions and answers as JSON in the hidden input
+            // Store as JSON in the hidden input
             document.getElementById('questions-and-answers').value = JSON.stringify(questionsAndAnswers);
-
-            // Submit the form after storing the data
-            this.submit();
         });
 
         // Initialize random questions

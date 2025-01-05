@@ -10,6 +10,15 @@
 </head>
 
 <body>
+    <div class="loading" id="loading">
+            
+        <div class="loading_centered">
+            <img src="../static/assets/image/logo.png" alt="logo">
+            <p>
+            Generating...
+            </p>
+        </div>
+    </div>
 
     <video id="bg-vid" autoplay loop muted>
         <source src="../static/assets/video/grid.mp4" type="video/mp4">
@@ -68,6 +77,11 @@
 
     
     <script>
+
+        function hideLoadingAnimation() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
         let selectedCardNumber = null;
 
         // Handle card click
