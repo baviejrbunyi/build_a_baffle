@@ -48,6 +48,7 @@ body {
     display: block;
     height: 70px;
     margin-right: auto;
+    margin-top: 15px;
 }
 
 .navbar i {
