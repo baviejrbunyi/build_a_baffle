@@ -120,7 +120,7 @@ body {
 }
 
 .selected-card button:hover {
-    color: #ff0000;
+    color: #fff;
 }
 
 .selected-text h2 {
