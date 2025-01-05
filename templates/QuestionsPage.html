@@ -62,47 +62,8 @@
         </form>
     </div>
 
-    <!---  LOADING THINGY  -->
-
-    <div class="loading">
-            
-        <div class="loading_centered">
-            <img src="/assets/image/logo.png" alt="logo">
-            <p>
-            Generating...
-            </p>
-        </div>
-    </div>
-
 
     <script>
-
-         // LOADING THINGY SCRIPT
-    document.querySelector('.submit-container button').addEventListener('click', function (event) {
-        // Prevent the default form submission
-        event.preventDefault();
-
-        // Show the loading animation
-        document.querySelector('.loading').style.display = 'block';
-
-        // Optionally, add a slight delay before submitting the form
-        setTimeout(() => {
-            // Redirect to the desired page (replace '/next-page' with the actual URL)
-        window.location.href = '/cards';
-    }, 5000); // 5000 milliseconds = 5 seconds
-    });
-
-
-
-
-
-
-
-
-
-
-
-
         // Initialize necessary variables
         let currentQuestion = 1;
         const totalQuestions = 3;
