@@ -300,6 +300,10 @@ body .loading {
     margin-bottom: 10px;
 }
 
+.selected-fields-div p {
+    color: #fff;
+}
+
 
 .selected-gaps-div, .selected-recommendations-div {
     background-color: #fff;
