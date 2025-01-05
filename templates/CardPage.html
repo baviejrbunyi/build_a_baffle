@@ -41,7 +41,7 @@
     </div>
 
 
-    <div class="vignette-bg">
+    <div class="vignette-bg" id="vignette" style="display: none;">
         <div class="selected-card" id="target-div" style="display: none;">
             <button onclick="hideTargetDiv()">X</button>
 
@@ -108,13 +108,18 @@
 
             // Show the selected card
             const targetDiv = document.getElementById('target-div');
+            const vignette = document.getElementById('vignette');
             targetDiv.style.display = 'block';
+            vignette.style.display = 'block';
+            
         }
 
         // Hide the selected card and refresh the baffle list
         function hideTargetDiv() {
             const targetDiv = document.getElementById('target-div');
+            const vignette = document.getElementById('vignette');
             targetDiv.style.display = 'none';
+            vignette.style.display = 'block';
 
             // Refresh baffle cards after closing
             fetchBaffles();  // Ensure the list is refreshed here
