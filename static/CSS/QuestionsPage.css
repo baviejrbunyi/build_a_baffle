@@ -271,7 +271,7 @@ body {
     top: 0;
     left: 0;
     width: 1000px;
-    height: 500px;
+    height: 500px auto;
     text-align: center;
     background: rgba(18,130,183, 1);
     padding-left: 40px;
@@ -322,5 +322,5 @@ body {
 }
 
 .move-up {
-    transform: translateY(-150px);
+    transform: translateY(-1000px);
 }
