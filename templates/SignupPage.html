@@ -36,13 +36,13 @@
 
             <div class="input-box">
                 <p>Password</p>
-                <input type="password" required>
+                <input id="WordPass" type="password" minlength="8" required>
 
             </div>
 
             <div class="input-box">
                 <p>Confirm Password</p>
-                <input type="password" required>
+                <input id="reWordPass" type="password" minlength="8" required>
             </div>
 
             <div class="other-options">
@@ -60,6 +60,26 @@
 
         </form>
     </div>
+
+
+    <script>
+        const submit_button = document.getElementsByClassName('.sign-up-button');
+        const passwordInput = document.getElementById('WordPass');
+        const rePasswordInput = document.getElementById('reWordPass');
+        
+        rePasswordInput.addEventListener('input', function (event) {
+            rePasswordInput.setCustomValidity('');
+
+            if (rePasswordInput.value != passwordInput.value) {
+                rePasswordInput.setCustomValidity('Password does not match.');
+            }
+        });
+
+        submit_button.addEventListener('submit', function (event) {
+            rePasswordInput.reportValidity();
+        })
+    </script>
+
 
 
 </body>
