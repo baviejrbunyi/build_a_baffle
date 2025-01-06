@@ -62,7 +62,7 @@
         </form>
     </div>
 
-    <div class="instructions">
+    <div class="instructions" id="instruc-div">
         <h1>WELCOME</h1>
 
         <p>
@@ -80,11 +80,29 @@ Once you’re done, you might see a summary of your answers or be guided to the 
 
 Enjoy the activity!
         </p>
+
+        <button onclick="closeInstruction()">OK!</button>
     </div>
 
 
 
     <script>
+
+
+        // Instructions button 
+        function closeInstruction() {
+            const instructDiv = document.getElementById('instruc-div');
+            instructDiv.classList.add('move-up');
+        }
+
+
+
+
+
+
+
+
+
         // Initialize necessary variables
         let currentQuestion = 1;
         const totalQuestions = 3;
