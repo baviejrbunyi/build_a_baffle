@@ -11,11 +11,10 @@
 
 <body>
     <div class="loading" id="loading">
-            
         <div class="loading_centered">
             <img src="../static/assets/image/logo.png" alt="logo">
             <p>
-            Generating...
+                Generating...
             </p>
         </div>
     </div>
@@ -33,13 +32,14 @@
     <div class="card-container" id="card-container">
         {% for baffle in baffles %}
         <div class="card" data-title="{{ baffle.title }}" data-field="{{ baffle.field|join(', ') }}"
-            data-gaps="{{ baffle.gaps|join(', ') }}" data-recommendations="{{ baffle.recommendations }}"
+            data-gaps="{{ baffle.gaps|join(', ') }}" data-recommendations="{{ baffle.recommendations }} "
             data-card-number="{{ loop.index }}" onclick="handleCardClick(this)">
             <p>{{ baffle.title }}</p>
         </div>
         {% endfor %}
-    </div>
+    
 
+    </div>
 
     <div class="vignette-bg" id="vignette" style="display: none;">
         <div class="selected-card" id="target-div" style="display: none;">
@@ -48,20 +48,18 @@
             <div class="selected-text">
                 <h2 id="selected-title"></h2>
 
-            <div class="selected-fields-div">
-                <p id="selected-field"></p>
-            </div>
-                
+                <div class="selected-fields-div">
+                    <p id="selected-field"></p>
+                </div>
 
-            <div class="selected-gaps-div">
-                <p id="selected-gaps"></p>
-            </div>
-                
-            <div class="selected-recommendations-div">
-                <p id="selected-recommendations"></p>
-            </div>
+                <div class="selected-gaps-div">
+                    <p>Gaps:</p>
+                    <div id="selected-gaps"></div> <!-- Gap container -->
+                </div>
 
-
+                <div class="selected-recommendations-div">
+                    <p id="selected-recommendations"></p>
+                </div>
             </div>
 
             <div class="selected-buttons">
@@ -79,31 +77,39 @@
             </div>
         </div>
 
+        
     </div>
+
     
-    
+
     <script>
-
-        function hideLoadingAnimation() {
-            document.getElementById('loading').style.display = 'none';
-        }
-
         let selectedCardNumber = null;
 
         // Handle card click
         function handleCardClick(card) {
             const title = card.getAttribute('data-title');
             const field = card.getAttribute('data-field');
-            const gaps = card.getAttribute('data-gaps');
+            const gaps = card.getAttribute('data-gaps').split(','); // Split gaps into an array
             const recommendations = card.getAttribute('data-recommendations');
 
             // Get the card number based on its index in the list (1-based index)
             selectedCardNumber = Array.from(card.parentNode.children).indexOf(card) + 1;
 
             // Update selected card content
-            document.getElementById('selected-title').textContent = `Title: ${title}`;
-            document.getElementById('selected-field').textContent = `Field(s): ${field}`;
-            document.getElementById('selected-gaps').textContent = `Gaps: ${gaps}`;
+            document.getElementById('selected-title').textContent = `${title}`;
+            document.getElementById('selected-field').textContent = `Fields: ${field}`;
+
+            // Display gaps in a styled container with bullet points
+            const gapsContainer = document.getElementById('selected-gaps');
+            gapsContainer.innerHTML = ''; // Clear previous gaps
+
+            gaps.forEach(gap => {
+                const gapElement = document.createElement('p');
+                gapElement.classList.add('gap-item');
+                gapElement.textContent = gap.trim(); // Trim spaces around each gap
+                gapsContainer.appendChild(gapElement);
+            });
+
             document.getElementById('selected-recommendations').textContent = `Recommendations: ${recommendations}`;
 
             // Show the selected card
@@ -111,7 +117,6 @@
             const vignette = document.getElementById('vignette');
             targetDiv.style.display = 'block';
             vignette.style.display = 'block';
-            
         }
 
         // Hide the selected card and refresh the baffle list
@@ -203,8 +208,11 @@
                 });
         });
 
+        // Retake the quiz (redirect to questions page)
+        function retake() {
+            window.location.href = "{{ url_for('questions') }}";  // Redirect to questions page
+        }
     </script>
-
 
 </body>
 

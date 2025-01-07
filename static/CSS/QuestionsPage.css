@@ -207,22 +207,26 @@ body {
     justify-content: center;
 }
 
-
-
-
-
-/* Addition */
 .loading {
     position: fixed;
     bottom: -100%;
     left: 0;
     width: 100%;
     height: 100%;
-    animation: slideUp 1.5s ease-out forwards;
     text-align: center;
-    display: none;
-    z-index: 1000;
+    display: flex; /* Make the container a flex container */
+    justify-content: center; /* Horizontally center */
+    align-items: center; /* Vertically center */
+    z-index: 1000000;
     background: rgba(18,130,183, 1);
+    visibility: hidden; /* Hide initially */
+    animation: none; /* No animation initially */
+}
+
+.loading.show {
+    visibility: visible; /* Show the loading screen */
+    animation: slideUp 1.5s ease-out forwards; /* Trigger the animation */
+    bottom: 0; /* Ensure it appears in the correct position */
 }
 
 .loading_centered {
@@ -230,29 +234,27 @@ body {
     width: 1100px;
     background: #8abab5;
     color: #fff;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 10px;
+    padding: 20px; /* Padding on all sides */
     border: 4px solid #3A2308;
     border-radius: 10px;
-    padding-bottom: 20px;
-    margin-left: 15%;
-    margin-top: 5%;
+    
+    display: flex; /* Use flexbox inside the loading box */
+    flex-direction: column; /* Align elements vertically */
+    justify-content: center; /* Center the children vertically */
+    align-items: center; /* Center the children horizontally */
 }
 
 .loading_centered img {
     height: 40%;
     width: 40%;
-    margin-top: 100px;
 }
 
 .loading_centered p {
-    margin-top: -30px;
     font-size: 35px;
     color: #3A2308;
     font-weight: 600;
+    margin-top: 20px; /* Adjust for spacing between the image and text */
 }
-
 
 @keyframes slideUp {
     0% {
@@ -265,38 +267,31 @@ body {
 
 
 
+
 .instructions {
     z-index: 1000;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 1000px;
-    height: 500px auto;
-    text-align: center;
-    background: rgba(18,130,183, 1);
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-bottom: 40px;
-    padding-top: 30px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%; /* Adjust width as needed */
+    max-width: 1000px; /* Set a max-width for large screens */
+    background: rgba(18, 130, 183, 1);
+    padding: 30px 40px;
     border: 4px solid #3A2308;
     border-radius: 10px;
-    margin-left: 16.5%;
-    margin-top: 5%;
     text-align: center;
-
     transition: transform 0.5s ease-in-out;
 }
 
 .instructions h1 {
-    
     font-size: 30px;
     color: #fff;
     font-weight: 600;
 }
 
 .instructions p {
-    
-    font-size: 25px;
+    font-size: 18px;
     color: #fff;
     font-weight: 400;
     margin-bottom: 20px;
@@ -317,10 +312,9 @@ body {
 }
 
 .instructions button:hover {
-    transform: translateY(1.1);
-
+    transform: scale(1.05);
 }
 
 .move-up {
-    transform: translateY(-1000px);
+    transform: translate(-50%, calc(-50% - 100vh));
 }

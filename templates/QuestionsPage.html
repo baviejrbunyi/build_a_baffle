@@ -12,11 +12,10 @@
 <body>
 
     <div class="loading" id="loading">
-            
         <div class="loading_centered">
             <img src="../static/assets/image/logo.png" alt="logo">
             <p>
-            Generating...
+                Generating...
             </p>
         </div>
     </div>
@@ -32,7 +31,6 @@
     </div>
 
     <div class="wrapper">
-
         <form id="question-form" action="/cards" method="POST">
             <h1 id="question-title">Question 1</h1>
 
@@ -40,21 +38,20 @@
             <div class="input-box">
                 <p id="random-question" style="font-weight: bold;"></p>
                 <input type="text" id="answer" placeholder="Your answer" required>
+                <span id="error-message" style="color: red; display: none;">Please enter a valid answer.</span>
             </div>
 
             <!-- Navigation buttons -->
             <div class="button-container">
                 <div class="cancel-button">
-                    <button type="button" onclick="navigateQuestion('prev')">Previous</button>
+                    <button type="button" onclick="navigateQuestion('prev')" style="display: none;">Previous</button>
                 </div>
                 <div class="next-button">
                     <button type="button" onclick="navigateQuestion('next')">Next</button>
                 </div>
-            </div>
-
-            <!-- Submit button -->
-            <div class="submit-container" style="display: none;">
-                <button type="submit" onclick="showLoadingScreen()">Submit</button>
+                <div class="submit-container">
+                    <button type="submit" onclick="showLoadingScreen(event)">Submit</button>
+                </div>
             </div>
 
             <!-- Hidden inputs for all answers -->
@@ -64,44 +61,29 @@
 
     <div class="instructions" id="instruc-div">
         <h1>WELCOME</h1>
-
         <p>
-            Welcome to our Build-a-Baffle! 
-            
-                Here’s how it works:
-
-You’ll be asked three simple questions, one at a time. All you need to do is answer each question with the first thing that comes to your mind—no overthinking!
-
-To begin, click the "Start" button. The first question will appear on your screen. Type your answer in the box provided and either click "Next" or press "Enter" to move on.
-
-After answering all three questions, click "Submit" to finish. A confirmation message will let you know your responses have been recorded.
-
-Once you’re done, you might see a summary of your answers or be guided to the next part of the experience. If you want to try again, just click the "Retake" button to start over.
-
-Enjoy the activity!
+            Welcome to our Build-a-Baffle!<br>
+            Here’s how it works:<br>
+            You’ll be asked three simple questions, one at a time. All you need to do is answer each question with the
+            first thing that comes to your mind—no overthinking! <br><br>
+            To begin, click the "Start" button. The first question will appear on your screen. Type your answer in the
+            box provided and either click "Next" to move on.<br><br>
+            After answering all three questions, click "Submit" to finish. A loading screen will show up while we build
+            your baffles.<br><br>
+            Once you’re done, you might see a summary of your answers or be guided to the next part of the experience.
+            If you want to try again, just click the "Home" button to start over.<br><br>
+            Enjoy the activity!
         </p>
-
         <button onclick="closeInstruction()">OK!</button>
     </div>
 
-
-
     <script>
-
 
         // Instructions button 
         function closeInstruction() {
             const instructDiv = document.getElementById('instruc-div');
             instructDiv.classList.add('move-up');
         }
-
-
-
-
-
-
-
-
 
         // Initialize necessary variables
         let currentQuestion = 1;
@@ -139,12 +121,36 @@ Enjoy the activity!
                 document.getElementById('question-title').textContent = `Question ${currentQuestion}`;
                 document.getElementById('answer').value = answers[currentQuestion - 1] || ''; // Load saved answer
             }
+
+            // Show/hide previous button
+            document.querySelector('.cancel-button button').style.display = currentQuestion > 1 ? 'block' : 'none';
+            // Show/hide next button on last question
+            document.querySelector('.next-button button').style.display = currentQuestion === totalQuestions ? 'none' : 'block';
+            document.querySelector('.submit-container').style.display = currentQuestion === totalQuestions ? 'block' : 'none';
+        }
+
+        // Input validation with pop-up
+        function isValidAnswer(answer) {
+            const trimmedAnswer = answer.trim();
+            const wordRegex = /[a-zA-Z]+/; // Simple check for meaningful words
+            return trimmedAnswer.length > 0 && wordRegex.test(trimmedAnswer);
         }
 
         // Navigate between questions
         function navigateQuestion(direction) {
             const answerInput = document.getElementById('answer');
-            answers[currentQuestion - 1] = answerInput.value; // Save current answer
+            const errorMessage = document.getElementById('error-message');
+
+            // Save current answer
+            if (direction !== 'prev') {
+                answers[currentQuestion - 1] = answerInput.value.trim() || ''; // Save current answer
+
+                // Validate the input before moving
+                if (!isValidAnswer(answerInput.value)) {
+                    alert('Please enter a valid answer!'); // Popup alert
+                    return;
+                }
+            }
 
             if (direction === 'next' && currentQuestion < totalQuestions) {
                 currentQuestion++;
@@ -153,41 +159,47 @@ Enjoy the activity!
             }
 
             updateQuestion();
-
-            // Toggle navigation buttons
-            document.querySelector('.button-container').style.display = currentQuestion === totalQuestions ? 'none' : 'flex';
-            document.querySelector('.submit-container').style.display = currentQuestion === totalQuestions ? 'block' : 'none';
         }
 
         // Show loading screen
-        function showLoadingScreen() {
-            document.getElementById('loading').style.display = 'block';
+        function showLoadingScreen(event) {
+            event.preventDefault(); // Prevent form submission
+            const answerInput = document.getElementById('answer');
+            if (isValidAnswer(answerInput.value)) {
+                document.querySelector('.loading').classList.add('show');
+                // Save the answers and questions
+                answers[currentQuestion - 1] = answerInput.value.trim() || ''; // Save current answer
+
+                const questionsAndAnswers = randomQuestions.map((question, index) => ({
+                    question,
+                    answer: answers[index] || ''
+                }));
+
+                // Log data for debugging
+                console.log("Questions and Answers:", questionsAndAnswers);
+
+                // Store as JSON in the hidden input
+                document.getElementById('questions-and-answers').value = JSON.stringify(questionsAndAnswers);
+
+                // Submit the form
+                document.getElementById('question-form').submit();
+            } else {
+                alert('Please enter a valid answer!');
+            }
         }
 
-
         document.getElementById('question-form').addEventListener('submit', function (event) {
+            // Log before submitting
+            const questionsAndAnswers = document.getElementById('questions-and-answers').value;
+            console.log("Form data before submission:", questionsAndAnswers);
+
             // Show loading animation
             document.getElementById('loading').style.display = 'block';
-
-            // Save answers and questions
-            const answerInput = document.getElementById('answer');
-            answers[currentQuestion - 1] = answerInput.value.trim() || ''; // Save current answer
-
-            const questionsAndAnswers = randomQuestions.map((question, index) => ({
-                question,
-                answer: answers[index] || ''
-            }));
-
-            console.log("Questions and Answers before submission:", questionsAndAnswers);
-
-            // Store as JSON in the hidden input
-            document.getElementById('questions-and-answers').value = JSON.stringify(questionsAndAnswers);
         });
 
         // Initialize random questions
         generateRandomQuestions();
         updateQuestion();
-
     </script>
 </body>
 
