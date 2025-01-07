@@ -1,5 +1,0 @@
-[phases.setup]
-commands = ["python -m venv .venv", "pip install -r requirements.txt"]
-
-[phases.start]
-commands = ["python app.py"]
