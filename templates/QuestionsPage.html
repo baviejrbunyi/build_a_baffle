@@ -7,6 +7,7 @@
     <title>BAB</title>
     <link rel="stylesheet" href="../static/CSS/QuestionsPage.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/image/logo.ico') }}" type="image/x-icon">
 </head>
 
 <body>
@@ -60,9 +61,8 @@
     </div>
 
     <div class="instructions" id="instruc-div">
-        <h1>WELCOME</h1>
+        <h1>WELCOME TO BUILD A BAFFLE!</h1><br>
         <p>
-            Welcome to our Build-a-Baffle!<br>
             Here’s how it works:<br>
             You’ll be asked three simple questions, one at a time. All you need to do is answer each question with the
             first thing that comes to your mind—no overthinking! <br><br>
@@ -70,11 +70,12 @@
             box provided and either click "Next" to move on.<br><br>
             After answering all three questions, click "Submit" to finish. A loading screen will show up while we build
             your baffles.<br><br>
-            Once you’re done, you might see a summary of your answers or be guided to the next part of the experience.
+            Once you're done and wish to create more baffles, you may select one of the cards and click "Regenerate". 
+            Yuu may also start over by clicking the "Home" button.<br><br>
             If you want to try again, just click the "Home" button to start over.<br><br>
-            Enjoy the activity!
+            Enjoy!
         </p>
-        <button onclick="closeInstruction()">OK!</button>
+        <button onclick="closeInstruction()">Start</button>
     </div>
 
     <script>

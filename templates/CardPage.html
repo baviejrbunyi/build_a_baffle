@@ -7,6 +7,7 @@
     <title>BAB</title>
     <link rel="stylesheet" href="../static/CSS/CardPage.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/image/logo.ico') }}" type="image/x-icon">
 </head>
 
 <body>
@@ -37,7 +38,7 @@
             <p>{{ baffle.title }}</p>
         </div>
         {% endfor %}
-    
+
 
     </div>
 
@@ -77,10 +78,8 @@
             </div>
         </div>
 
-        
-    </div>
 
-    
+    </div>
 
     <script>
         let selectedCardNumber = null;
@@ -159,9 +158,8 @@
                 });
         }
 
-        // Regenerate baffle and update the list
         document.getElementById('regenerate-button').addEventListener('click', function () {
-            const field = document.getElementById('selected-field').textContent.replace("Field(s): ", "");
+            const field = document.getElementById('selected-field').textContent.replace("Fields: ", "");
 
             fetch('/regenerate_baffle', {
                 method: 'POST',
@@ -179,9 +177,21 @@
                         alert(`Error: ${data.error}`);
                     } else {
                         // Update the selected card with new baffle data
-                        document.getElementById('selected-title').textContent = `Title: ${data.title}`;
-                        document.getElementById('selected-field').textContent = `Field(s): ${data.field}`;
-                        document.getElementById('selected-gaps').textContent = `Gaps: ${data.gaps}`;
+                        document.getElementById('selected-title').textContent = `${data.title}`;
+                        document.getElementById('selected-field').textContent = `Fields: ${data.field}`;
+
+                        // Clear the gaps container
+                        const gapsElement = document.getElementById('selected-gaps');
+                        gapsElement.innerHTML = ''; // Clear previous gaps
+
+                        // Add new gaps as individual styled items
+                        data.gaps.forEach(gap => {
+                            const gapElement = document.createElement('p');
+                            gapElement.classList.add('gap-item'); // Use the existing styles
+                            gapElement.textContent = gap.trim();
+                            gapsElement.appendChild(gapElement);
+                        });
+
                         document.getElementById('selected-recommendations').textContent = `Recommendations: ${data.recommendations}`;
 
                         // Update the card-container with the refreshed list of baffles
@@ -194,8 +204,11 @@
                             card.classList.add('card');
                             card.setAttribute('data-title', baffle.title);
                             card.setAttribute('data-field', baffle.field);
-                            card.setAttribute('data-gaps', baffle.gaps);
+
+                            // Set bullet points for gaps in data attributes
+                            card.setAttribute('data-gaps', JSON.stringify(baffle.gaps));
                             card.setAttribute('data-recommendations', baffle.recommendations);
+
                             card.textContent = baffle.title;
                             card.onclick = () => handleCardClick(card);
                             cardContainer.appendChild(card);
@@ -207,6 +220,8 @@
                     alert('Failed to regenerate baffle');
                 });
         });
+  
+
 
         // Retake the quiz (redirect to questions page)
         function retake() {
