@@ -109,15 +109,11 @@ body {
 }
 
 .navbar img {
+
     display: block;
-    margin-left: 50px;
-    margin-right: 50px;
-    width: auto;
-    height: auto;
-    margin-top: 5px;
-    margin-bottom: -15px;
-    margin-left: 10px;
-    float: left;
+    height: 80px;
+    margin-right: auto;
+    padding-top: 15px;
 }
 
 .wrapper {
@@ -219,8 +215,7 @@ text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .sign-up-button {
-    margin-left: 25%;
-    width: 50%;
+    width: 100%;
     height: 45px;
     background: #84CAFF;
     border: none;
